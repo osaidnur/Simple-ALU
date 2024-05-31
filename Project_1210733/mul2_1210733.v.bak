@@ -1,0 +1,9 @@
+module mul2_1210733#(parameter n=4)(a,ans);
+input [n-1:0] a ;
+output [n+1:0] ans ;
+reg [n: 0] ans;
+always@(a)
+begin
+ans = a*2 ;
+end
+endmodule 

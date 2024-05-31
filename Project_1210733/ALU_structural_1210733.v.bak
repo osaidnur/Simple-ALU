@@ -1,0 +1,43 @@
+module ALU_structural_1210733 #(parameter n=4)(X , Y , SEL , OUT);
+input signed [n-1:0] X ,Y ; // input size is n
+input [2:0] SEL ;
+output signed [n+1:0] OUT ; // output size is n+2
+
+// wires to store the result of operations that needs n bits 
+wire [n-1:0] op0 ,op4 , op5 , op6 , op7 ;
+// wires to store the result of operations that needs n+1 bits
+wire [n:0] op2 , op3 ,temp1,temp2,temp3  ;
+// wires to store the result of operations that needs n+2 bits
+wire [n+1:0] op1 ;
+
+// 1-- (x+y)/2
+ADD_SUB_1210733 add1(X,Y,1,temp1);  // store the value of x+y in temporarily wire called temp1
+MULTIP_DIV_1210733 m1(temp1,0,op0);
+
+// 2-- 2*(x+y)
+MULTIP_DIV_1210733 m2(temp1,1,op1); // using the value stored in temp1 without add x,y again 
+
+// 3-- (x/2)+y 
+MULTIP_DIV_1210733 m3(X,0,temp2); // store the value of x/2 in temp2 wire
+ADD_SUB_1210733 add2(temp2,Y,1,op2); // adding temp2 to y
+
+// 4-- x-(y/2)
+MULTIP_DIV_1210733 m4(Y,0,temp3); // store the value of y/2 in temp3 wire
+ADD_SUB_1210733 add3(X,temp3,0,op3); // subtracting temp3 from x "> order is important <"
+
+// 5- NAND
+NAND_1210733 n1(X,Y,op4);
+
+// 5- NOT
+NOT_1210733 n2(X,op5);
+
+// 5- NOR
+NOR_1210733 n3(X,Y,op6);
+
+// 5- XOR
+XOR_1210733 n4(X,Y,op7);
+
+// invoke all values calculated ,and selection value to the mux with respect to order  
+
+MUX_1210733(op0 , op1 , op2 , op3 , op4 , op5 , op6 , op7 , SEL , OUT);
+endmodule 

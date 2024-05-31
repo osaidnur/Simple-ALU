@@ -1,0 +1,9 @@
+module FA_1210733#(parameter n=3)(a,b, sum);
+input [n-1:0]a,b  ;
+output signed [n:0] sum ;
+reg [n:0] sum;
+always@(a,b)
+begin 
+sum = a+b ;
+end
+endmodule 

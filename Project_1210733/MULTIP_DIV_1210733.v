@@ -1,0 +1,17 @@
+module MULTIP_DIV_1210733#(parameter n=4)(a,sel,ans);
+input signed [n-1:0] a ; // input size is n
+input sel ; // 0 or 1
+output reg signed[n+1:0] ans ; // output size is n+2
+always@(a,sel)
+begin
+/* if the selection input is 0 , the block will 
+   work as divider (right shift by one bit)
+   and if the selection input is 1 , the block will work as
+   multiplier (left shift by one bit)
+ */
+case (sel)
+	1'b0 : ans = a/2 ;
+	1'b1 : ans = a*2 ;
+endcase 
+end 
+endmodule 

@@ -1,0 +1,8 @@
+module NAND_1210733#(parameter n=4)(x,y,ans);
+input signed [n-1:0] x,y ;
+output reg signed[n-1:0] ans ;
+always@(x,y)
+begin
+ans = ~(x&y) ;
+end
+endmodule 
